@@ -1,4 +1,4 @@
-//#include "../include/mathProbabilitiesLib.hpp"
+#include "../include/mathProbabilitiesLib.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -7,7 +7,7 @@
 //DEBUG
 #include <iostream>
 
-// Math utilities
+// -------- Math utilities -------------
 
 long factorial(const int n){
     long f = 1;
@@ -16,10 +16,14 @@ long factorial(const int n){
     return f;
 }
 
+int binomialCoefficient(int n, int k){
+   if(k == 0 || k == n)
+   return 1;
+   return binomialCoefficient(n - 1, k - 1) + binomialCoefficient(n - 1, k);
+}
 
 
 // ---------- Probability distributions -----------
-// Functions to calculate P(X = k) or to sample from the distributions
 
 // Basic random number generator, between 0 and 1 (prerequisite)
 double sampleRandomBetweenZeroAndOne(){
@@ -29,47 +33,85 @@ double sampleRandomBetweenZeroAndOne(){
     return distr(gen); // generate numbers
 }
 
-// Uniform generator
+// Uniform CONTINUOUS generator
 float sampleUniformContinuous(float min, float max){
     return sampleRandomBetweenZeroAndOne() * (max - min) + min;
 }
 
-// Poisson probability
-float poisson(float lambda, float k){
-    float Sum_ln_k = 0;
-    for(int i=0; i<k; i++){
-        Sum_ln_k += log(k);
-    }
-
-    float X = ((exp(-lambda))*(pow(lambda,k)))/factorial(k);
-    float lnX = -lambda + k*log(lambda) - Sum_ln_k;
-    return exp(X);
-}
-
-// Poisson probability v2
-float poisson_v2(float lambda, float k){
+// Poisson
+float poisson(float lambda, float k){ // probability P(X=k)
     return exp(-lambda) * pow(lambda,k)/factorial(k);
 }
 
-// Poisson generator DISCRETE
-float samplePoisson(float lambda){
+float samplePoisson(float lambda){ // sample generator
     double randNb = sampleRandomBetweenZeroAndOne();
     double i = 0;
     double k = 0;
 
     while(i <= randNb){
-        i += poisson_v2(lambda, k);
+        i += poisson(lambda, k);
         k += 1;
     }
 
     return k;
 }
 
+// Bernoulli
+int sampleBernoulli(float p){
+    double randNb = sampleRandomBetweenZeroAndOne();
+    if(randNb <= p){
+        return 1;
+    }
+    return 0;
+}
+
+// Geometric
+float geometric(float p, float k){ // probability P(X=k)
+    return p * (pow(1-p, k-1));
+}
+
+float sampleGeometric(float p){ // sample generator
+    double randNb = sampleRandomBetweenZeroAndOne();
+    double i = 0;
+    double k = 1;
+
+    while(i <= randNb){
+        i += geometric(p, k);
+        k += 1;
+    }
+
+    return k;
+}
+
+// Binomial
+float binomial(int n, float p, int k){ // probability P(X=k)
+    return binomialCoefficient(n,k) * pow(p,k) * pow(1-p, n-k);
+}
+
+int sampleBinomial(int n, float p){ // sample generator
+    double randNb = sampleRandomBetweenZeroAndOne();
+    double i = 0;
+    int k = 0;
+
+    while(i <= randNb && k < n){
+        i += binomial(n, p, k);
+        k += 1;
+    }
+
+    return k;
+}
+
+
 // TESTS
 // g++ mathProbabilitiesLib.cpp -o testsProbas2.exe
 // .\testsProbas2.exe
+/*
 int main(){
     std::cout << "uniforme entre 0 et 1 : " << sampleRandomBetweenZeroAndOne() << std::endl;
     std::cout << "uniforme entre 2 et 5 : " << sampleUniformContinuous(2,5) << std::endl;
     std::cout << "Poisson de param lambda = 9,2 : " << samplePoisson(9.2) << std::endl;
+    std::cout << "Bernoulli de param p = 0,2 : " << sampleBernoulli(0.2) << std::endl;
+    std::cout << "Geometrique de param p = 0,2 : " << sampleGeometric(0.2) << std::endl;
+    std::cout << "Binomiale de params p = 0,2 et n = 20 : " << sampleBinomial(20, 0.2) << std::endl;
 }
+*/
