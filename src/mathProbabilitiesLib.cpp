@@ -1,11 +1,14 @@
-#include "../include/mathProbabilitiesLib.hpp"
+#include <iostream>
+#include <vector>
+#include <stdio.h>      /* printf, scanf, puts, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h> 
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
 #include <random>
 
-//DEBUG
-#include <iostream>
+#include "../include/mathProbabilitiesLib.hpp"
 
 // -------- Math utilities -------------
 
@@ -27,16 +30,17 @@ int binomialCoefficient(int n, int k){
 
 // Basic random number generator, between 0 and 1 (prerequisite)
 double sampleRandomBetweenZeroAndOne(){
-    std::random_device rd; // obtain a random number from hardware
-    std::mt19937 gen(rd()); // seed the generator
-    std::uniform_real_distribution<> distr(0., 1.); // define the range
-    return distr(gen); // generate numbers
-}
+    // std::random_device rd; // obtain a random number from hardware
+    // std::mt19937 gen(rd()); // seed the generator
+    // std::uniform_real_distribution<> distr(0., 1.); // define the range
+    // return distr(gen); // generate numbers
+    return float(rand()%10000) / 10000;
+} 
 
 // Uniform CONTINUOUS generator
 float sampleUniformContinuous(float min, float max){
     return sampleRandomBetweenZeroAndOne() * (max - min) + min;
-}
+} 
 
 // Poisson
 float poisson(float lambda, float k){ // probability P(X=k)
@@ -76,7 +80,7 @@ float sampleGeometric(float p){ // sample generator
     double k = 1;
 
     while(i <= randNb){
-        i += geometric(p, k);
+        i += geometric(p, k);   
         k += 1;
     }
 

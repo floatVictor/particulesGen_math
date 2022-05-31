@@ -9,14 +9,12 @@
 #include "Particule.hpp"
 #include "ParticuleList.hpp"
 
-extern int FRAMECOUNT;
-
 ParticuleList::ParticuleList(const glm::vec2 &initPos, const int nbParticules, const float angle){
     _initPos = initPos;
     _nbParticules = nbParticules;
 
     for (int i = 0; i < nbParticules; i++){
-        _tab.push_back(Particule(initPos, angle));
+        _tab.push_back(Particule(i, initPos, angle));
     }
     std::cout << "new list created" << std::endl;
     std::cout << "initPos : " << _initPos[0] << ";" << _initPos[1] << std::endl;

@@ -35,6 +35,8 @@ class World {
 
         bool getState();
 
+        ParticuleList getParticuleList();
+
 };
 
 #endif

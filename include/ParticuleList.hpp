@@ -4,6 +4,8 @@
 #include <vector>
 #include <p6/p6.h>
 
+#include "Particule.hpp"
+
 #ifndef __PARTICULELIST__HPP
 #define __PARTICULELIST__HPP
 

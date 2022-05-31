@@ -7,8 +7,8 @@
 
 #include "Particule.hpp"
 #include "ParticuleList.hpp"
-#include "worldVar.hpp"
 #include "World.hpp"
+#include "worldVar.hpp"
 
 World::World() {
 
@@ -28,9 +28,11 @@ void World::loopWorld(p6::Context &ctx) {
 
 void World::updateVar() {
 
-    _initPos = glm::vec2(_initPos[0] + perlin.noise1D(FRAMECOUNT * INITSMOOTHRATIO * 0.03)*0.1, _initPos[1] - _listIterator * _listIterator * _listIterator * HEIGHTRATIO - 0.008);
+    //_initPos = glm::vec2(_initPos[0] + perlin.noise1D(FRAMECOUNT * INITSMOOTHRATIO * 0.03)*0.1, _initPos[1] - _listIterator * _listIterator * _listIterator * HEIGHTRATIO - 0.008);
     if (_initPos[1] < - 1) _initPos[1] = 0;
     if (_initPos[0] > 1) _initPos[0] = -0.85;
 }
 
 bool World::getState() { return _listIterator < NBLIST;}
+
+ParticuleList World::getParticuleList() { return _current;}

@@ -13,16 +13,26 @@
 extern int FRAMECOUNT;
 
 extern float SIZERATIO;
-extern const int NBLIST;
-extern const int NBPARTICULE;
-extern const float INITANGLE;
+extern int NBLIST;
+extern int NBPARTICULE;
+extern float INITANGLE;
 
-extern const float HEIGHTRATIO;
-extern const float INITSMOOTHRATIO;
-extern const float INITNOISERATIO;
-extern const float INITNOISESIZE;
+extern float HEIGHTRATIO;
+extern float INITSMOOTHRATIO;
+extern float INITNOISERATIO;
+extern float INITNOISESIZE;
 
-extern const siv::PerlinNoise::seed_type seed;
-extern const siv::PerlinNoise perlin;
+extern siv::PerlinNoise::seed_type seed;
+extern siv::PerlinNoise perlin;
 
+extern float POISSON_LAMBDA;
+extern float BERNOUILLI_P;
+extern float GEOMETRIC_P;
+extern float BINO_P; 
+extern int BINO_N;
+
+extern float BERNOUILLI_AMP;
+extern float GEOMETRIC_AMP;
+
+extern float UNIFORM_AMP;
 #endif
